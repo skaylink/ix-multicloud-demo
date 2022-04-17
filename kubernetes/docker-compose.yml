@@ -14,6 +14,8 @@ services:
     build:
       context: ../application/bob/
       dockerfile: Dockerfile
+    environment:
+      - ALICE_ADDR=http://alice
     ports:
        - "80:80"
     restart: "always"

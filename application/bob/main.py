@@ -1,12 +1,13 @@
 import fastapi
 import uvicorn
 import requests
+import os
 
 app = fastapi.FastAPI()
 
 @app.get("/")
 async def root():
-    r = requests.get('http://alice/')
+    r = requests.get(os.getenv('ALICE_ADDR') + '/')
     return fastapi.responses.PlainTextResponse(r.content.decode('utf-8') + ' world')
     
 if __name__ == "__main__":
