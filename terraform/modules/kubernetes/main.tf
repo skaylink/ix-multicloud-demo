@@ -1,15 +1,17 @@
+####################################################
 # Case Azure
+####################################################
 resource "azurerm_resource_group" "cluster-azure" {
   count = var.cloud_provider == "azure" ? 1 : 0
-  #name = var.name
-  name = "cluster-at-azure"
-  location = "eastus"
+  name = var.name
+  location = var.azure_region
 }
 
+####################################################
 # Case AWS
-resource "azurerm_resource_group" "cluster-aws" {
+####################################################
+resource "aws_s3_bucket" "cluster-aws" {
   count = var.cloud_provider == "aws" ? 1 : 0
-  #name = var.name
-  name = "cluster-at-aws"
-  location = "eastus"
+  bucket = var.name
+  force_destroy = true
 }

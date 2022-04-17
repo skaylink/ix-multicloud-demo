@@ -9,15 +9,22 @@ terraform {
 }
 
 provider "azurerm" {
-  subscription_id = var.subscription_id
-  tenant_id = var.tenant_id
+  subscription_id = var.azure_subscription_id
+  tenant_id = var.azure_tenant_id
   features {}
 }
 
 
-module "azure-function-queries" {
+provider "aws" {
+  region = var.aws_region
+  profile = var.aws_profile
+}
+
+module "kubernetes-alice" {
   source = "./modules/kubernetes"
   name = var.name
-  cloud_provider = "azure"
+  cloud_provider = var.cloud_provider
+  azure_region = var.azure_region
+  aws_region = var.aws_region
 }
 
