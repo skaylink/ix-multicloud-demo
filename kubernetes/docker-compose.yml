@@ -1,0 +1,19 @@
+version: "3.5"
+services:
+  alice:
+    container_name: alice
+    build:
+      context: ../application/alice/
+      dockerfile: Dockerfile
+    ports:
+       - "81:80"
+    restart: "always"
+
+  bob:
+    container_name: bob
+    build:
+      context: ../application/bob/
+      dockerfile: Dockerfile
+    ports:
+       - "80:80"
+    restart: "always"
