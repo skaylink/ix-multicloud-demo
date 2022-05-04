@@ -7,7 +7,7 @@ app = fastapi.FastAPI()
 
 @app.get("/")
 async def root():
-    r = requests.get(os.getenv('ALICE_ADDR') + '/')
+    r = requests.get(os.getenv('PETRA_ADDR') + '/')
     return fastapi.responses.PlainTextResponse(r.content.decode('utf-8') + ' world')
     
 if __name__ == "__main__":

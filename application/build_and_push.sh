@@ -1,7 +1,7 @@
 REGISTRY=skaylinkgmbh
-IMAGE_NAME=ix-multicloud-demo-alice
+IMAGE_NAME=ix-multicloud-demo-petra
 IMAGE_VERSION=latest
-FOLDER=alice
+FOLDER=petra
 cd ${FOLDER}
 docker build -t ${IMAGE_NAME} .
 docker tag ${IMAGE_NAME} ${REGISTRY}/${IMAGE_NAME}:${IMAGE_VERSION}
@@ -10,9 +10,9 @@ cd ..
 
 
 REGISTRY=skaylinkgmbh
-IMAGE_NAME=ix-multicloud-demo-bob
+IMAGE_NAME=ix-multicloud-demo-klaus
 IMAGE_VERSION=latest
-FOLDER=bob
+FOLDER=klaus
 cd ${FOLDER}
 docker build -t ${IMAGE_NAME} .
 docker tag ${IMAGE_NAME} ${REGISTRY}/${IMAGE_NAME}:${IMAGE_VERSION}

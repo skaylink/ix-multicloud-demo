@@ -20,7 +20,16 @@ provider "aws" {
   profile = var.aws_profile
 }
 
-module "kubernetes-alice" {
+module "kubernetes-petra" {
+  source = "./modules/kubernetes"
+  name = var.name
+  cloud_provider = var.cloud_provider
+  azure_region = var.azure_region
+  aws_region = var.aws_region
+}
+
+
+module "kubernetes-klaus" {
   source = "./modules/kubernetes"
   name = var.name
   cloud_provider = var.cloud_provider
