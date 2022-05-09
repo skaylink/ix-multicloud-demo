@@ -2,20 +2,22 @@ version: "3.5"
 services:
   petra:
     container_name: petra
+    # image: skaylinkgmbh/ix-multicloud-demo-petra:latest
     build:
-      context: ../application/petra/
+      context: ./application/petra/
       dockerfile: Dockerfile
     ports:
-       - "81:80"
+      - "81:80"
     restart: "always"
 
   klaus:
     container_name: klaus
+    # image: skaylinkgmbh/ix-multicloud-demo-klaus:latest
     build:
-      context: ../application/klaus/
+      context: ./application/klaus/
       dockerfile: Dockerfile
     environment:
       - PETRA_ADDR=http://petra
     ports:
-       - "80:80"
+      - "80:80"
     restart: "always"
