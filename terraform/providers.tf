@@ -13,8 +13,16 @@ terraform {
       source  = "hashicorp/aws"
       version = "4.13.0"
     }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "2.11.0"
+    }
   }
   required_version = ">= 0.14.9"
+}
+
+provider "kubernetes" {
+  # TODO: Configuration options
 }
 
 provider "google" {
