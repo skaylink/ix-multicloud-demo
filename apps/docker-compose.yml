@@ -4,7 +4,7 @@ services:
     container_name: petra
     # image: skaylinkgmbh/ix-multicloud-demo-petra:latest
     build:
-      context: ./application/petra/
+      context: ./petra/
       dockerfile: Dockerfile
     ports:
       - "81:80"
@@ -14,7 +14,7 @@ services:
     container_name: klaus
     # image: skaylinkgmbh/ix-multicloud-demo-klaus:latest
     build:
-      context: ./application/klaus/
+      context: ./klaus/
       dockerfile: Dockerfile
     environment:
       - PETRA_ADDR=http://petra
