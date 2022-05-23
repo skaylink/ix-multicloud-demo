@@ -18,10 +18,6 @@ resource "helm_release" "klaus" {
     name  = "ingress.className"
     value = var.ingressClassName
   }
-  set {
-    name  = "ingress.annotations.kubernetes\\.io/ingress\\.class"
-    value = var.ingress_class_name
-  }
 
   # Ingress Paths Configuration
   set {
@@ -37,3 +33,5 @@ resource "helm_release" "klaus" {
     value = "ImplementationSpecific"
   }
 }
+
+helm upgrade klaus ./klaus --set "ingress.enabled"=true --set "ingress.className"=nginx --set "ingress.hosts[0].host"=klaus.local --set "ingress.hosts[0].paths[0].path"=\/ --set "ingress.hosts[0].paths[0].pathType"=ImplementationSpecific

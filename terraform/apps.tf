@@ -29,12 +29,22 @@ module "nginx-controller" {
 
 # Application Components:
 
+resource "kubernetes_namespace" "group" {
+  metadata {
+    name = "group"
+  }
+}
+
 module "petra" {
   source = "./applications/petra"
+
+  namespace = kubernetes_namespace.group.metadata.0.name
 }
 
 
 module "klaus" {
   source = "./applications/klaus"
-  # TODO: Missing parameters
+
+  namespace = kubernetes_namespace.group.metadata.0.name
+
 }
