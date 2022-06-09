@@ -1,5 +1,6 @@
 name           = "test-app"
 cloud_provider = "gcp"
+ingress_domain = "test.gcp.example.de"
 
 # Azure Specific
 azure_subscription_id = ""
