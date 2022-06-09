@@ -16,15 +16,18 @@ variable "azure_region" {
 ### Outputs
 
 output "client_key" {
-  value = azurerm_kubernetes_cluster.main.kube_config[0].client_key
+  value     = azurerm_kubernetes_cluster.main.kube_config[0].client_key
+  sensitive = true
 }
 
 output "client_certificate" {
-  value = azurerm_kubernetes_cluster.main.kube_config[0].client_certificate
+  value     = azurerm_kubernetes_cluster.main.kube_config[0].client_certificate
+  sensitive = true
 }
 
 output "cluster_ca_certificate" {
-  value = azurerm_kubernetes_cluster.main.kube_config[0].cluster_ca_certificate
+  value     = azurerm_kubernetes_cluster.main.kube_config[0].cluster_ca_certificate
+  sensitive = true
 }
 
 output "host" {
@@ -36,7 +39,8 @@ output "username" {
 }
 
 output "password" {
-  value = azurerm_kubernetes_cluster.main.kube_config[0].password
+  value     = azurerm_kubernetes_cluster.main.kube_config[0].password
+  sensitive = true
 }
 
 output "node_resource_group" {
@@ -47,7 +51,7 @@ output "location" {
   value = azurerm_kubernetes_cluster.main.location
 }
 
-output "aks_id" {
+output "id" {
   value = azurerm_kubernetes_cluster.main.id
 }
 
@@ -70,15 +74,18 @@ output "kubelet_identity" {
 }
 
 output "admin_client_key" {
-  value = length(azurerm_kubernetes_cluster.main.kube_admin_config) > 0 ? azurerm_kubernetes_cluster.main.kube_admin_config.0.client_key : ""
+  value     = length(azurerm_kubernetes_cluster.main.kube_admin_config) > 0 ? azurerm_kubernetes_cluster.main.kube_admin_config.0.client_key : ""
+  sensitive = true
 }
 
 output "admin_client_certificate" {
-  value = length(azurerm_kubernetes_cluster.main.kube_admin_config) > 0 ? azurerm_kubernetes_cluster.main.kube_admin_config.0.client_certificate : ""
+  value     = length(azurerm_kubernetes_cluster.main.kube_admin_config) > 0 ? azurerm_kubernetes_cluster.main.kube_admin_config.0.client_certificate : ""
+  sensitive = true
 }
 
 output "admin_cluster_ca_certificate" {
-  value = length(azurerm_kubernetes_cluster.main.kube_admin_config) > 0 ? azurerm_kubernetes_cluster.main.kube_admin_config.0.cluster_ca_certificate : ""
+  value     = length(azurerm_kubernetes_cluster.main.kube_admin_config) > 0 ? azurerm_kubernetes_cluster.main.kube_admin_config.0.cluster_ca_certificate : ""
+  sensitive = true
 }
 
 output "admin_host" {
@@ -90,5 +97,6 @@ output "admin_username" {
 }
 
 output "admin_password" {
-  value = length(azurerm_kubernetes_cluster.main.kube_admin_config) > 0 ? azurerm_kubernetes_cluster.main.kube_admin_config.0.password : ""
+  value     = length(azurerm_kubernetes_cluster.main.kube_admin_config) > 0 ? azurerm_kubernetes_cluster.main.kube_admin_config.0.password : ""
+  sensitive = true
 }
