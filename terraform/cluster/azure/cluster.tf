@@ -8,10 +8,11 @@ resource "azurerm_resource_group" "main" {
 }
 
 resource "azurerm_kubernetes_cluster" "main" {
-  name                = var.cluster_name
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
-  kubernetes_version  = var.kubernetes_version
+  name                       = var.cluster_name
+  location                   = azurerm_resource_group.main.location
+  resource_group_name        = azurerm_resource_group.main.name
+  kubernetes_version         = var.cluster_version
+  dns_prefix_private_cluster = "dns_prefix_private_cluster"
 
   lifecycle {
     prevent_destroy = true

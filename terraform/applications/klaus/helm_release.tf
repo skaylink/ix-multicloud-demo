@@ -16,7 +16,7 @@ resource "helm_release" "klaus" {
   }
   set {
     name  = "ingress.className"
-    value = var.ingressClassName
+    value = var.ingress_class_name
   }
 
   # Ingress Paths Configuration
