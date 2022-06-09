@@ -6,7 +6,7 @@ data "kubernetes_namespace" "klaus" {
 
 resource "helm_release" "klaus" {
   name      = "klaus"
-  chart     = "../../charts/klaus" # Is a local chart
+  chart     = "${path.module}/../../../charts/klaus" # Is a local chart
   namespace = data.kubernetes_namespace.klaus.metadata[0].name
 
   # Ingress Base Configuration

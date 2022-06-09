@@ -6,6 +6,6 @@ data "kubernetes_namespace" "petra" {
 
 resource "helm_release" "petra" {
   name      = "petra"
-  chart     = "../../charts/petra" # Is a local chart
+  chart     = "${path.module}/../../../charts/petra" # Is a local chart
   namespace = data.kubernetes_namespace.petra.metadata[0].name
 }
