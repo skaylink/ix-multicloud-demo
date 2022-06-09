@@ -14,6 +14,10 @@ variable "cloud_provider" {
   }
 }
 
+variable "ingress_domain" {
+  type = string
+}
+
 ####################################################
 # Provider-specific variables
 ####################################################

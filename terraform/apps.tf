@@ -24,7 +24,7 @@ module "nginx-controller" {
   source = "terraform-iaac/nginx-controller/helm"
 
   # TODO: Make this only when gcp is in place
-  ip_address = google_compute_address.ingress_ip_address.address
+  # ip_address = google_compute_address.ingress_ip_address.address
 }
 
 # Application Components:
@@ -38,7 +38,9 @@ resource "kubernetes_namespace" "group" {
 module "petra" {
   source = "./applications/petra"
 
-  namespace = kubernetes_namespace.group.metadata.0.name
+  namespace          = kubernetes_namespace.group.metadata.0.name
+  ingress_class_name = "nginx"
+  ingress_domain     = var.ingress_domain
 }
 
 
@@ -46,5 +48,4 @@ module "klaus" {
   source = "./applications/klaus"
 
   namespace = kubernetes_namespace.group.metadata.0.name
-
 }

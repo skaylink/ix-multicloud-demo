@@ -33,5 +33,3 @@ resource "helm_release" "klaus" {
     value = "ImplementationSpecific"
   }
 }
-
-helm upgrade klaus ./klaus --set "ingress.enabled"=true --set "ingress.className"=nginx --set "ingress.hosts[0].host"=klaus.local --set "ingress.hosts[0].paths[0].path"=\/ --set "ingress.hosts[0].paths[0].pathType"=ImplementationSpecific

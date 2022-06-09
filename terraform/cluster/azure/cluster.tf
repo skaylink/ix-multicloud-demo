@@ -1,4 +1,4 @@
-rresource "azurerm_resource_group" "main" {
+resource "azurerm_resource_group" "main" {
   name     = "${var.cluster_name}-aks-resources"
   location = var.azure_region
 
