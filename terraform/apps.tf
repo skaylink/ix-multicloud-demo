@@ -1,14 +1,3 @@
-resource "random_uuid" "kubernetes_dashboard_csrf" {
-}
-
-module "kubernetes_dashboard" {
-  source  = "cookielab/dashboard/kubernetes"
-  version = "0.9.0"
-
-  kubernetes_namespace_create = true
-  kubernetes_dashboard_csrf   = random_uuid.kubernetes_dashboard_csrf.result
-}
-
 module "nginx-controller" {
   source = "terraform-iaac/nginx-controller/helm"
 
