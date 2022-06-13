@@ -8,7 +8,7 @@ import (
 	"github.com/gruntwork-io/terratest/modules/terraform"
 )
 
-func TestAllInAzureUnit(t *testing.T) {
+func TestAllInAzureCluster(t *testing.T) {
 	t.Parallel()
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../terraform",
