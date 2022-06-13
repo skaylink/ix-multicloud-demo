@@ -34,13 +34,13 @@ module "petra" {
 }
 
 
-module "klaus" {
-  source = "./applications/klaus"
-  depends_on = [
-    kubernetes_namespace.group
-  ]
-
-  namespace          = kubernetes_namespace.group.metadata.0.name
-  ingress_class_name = "nginx"
-  ingress_domain     = var.ingress_domain
-}
+#module "klaus" {
+#  source = "./applications/klaus"
+#  depends_on = [
+#    kubernetes_namespace.group
+#  ]
+#
+#  namespace          = kubernetes_namespace.group.metadata.0.name
+#  ingress_class_name = "nginx"
+#  ingress_domain     = var.ingress_domain
+#}
