@@ -29,26 +29,7 @@ terraform {
   required_version = ">= 0.14.9"
 }
 
-provider "kubernetes" {
-  host                   = module.azure_aks.host
-  client_certificate     = base64decode(module.azure_aks.client_certificate)
-  client_key             = base64decode(module.azure_aks.client_key)
-  cluster_ca_certificate = base64decode(module.azure_aks.cluster_ca_certificate)
-}
-
-provider "helm" {
-  kubernetes {
-    host                   = module.azure_aks.host
-    client_certificate     = base64decode(module.azure_aks.client_certificate)
-    client_key             = base64decode(module.azure_aks.client_key)
-    cluster_ca_certificate = base64decode(module.azure_aks.cluster_ca_certificate)
-  }
-}
-
-provider "google" {
-  project = var.gcp_project_id
-  region  = var.gcp_region
-}
+### Azure Cloud
 
 provider "azurerm" {
   subscription_id = var.azure_subscription_id
@@ -56,7 +37,26 @@ provider "azurerm" {
   features {}
 }
 
-provider "aws" {
-  region  = var.aws_region
-  profile = var.aws_profile
+### Google Cloud Platform
+
+provider "google" {
+  project = var.gcp_project_id
+  region  = var.gcp_region
+}
+
+### Kubernetes
+provider "kubernetes" {
+  host                   = var.cloud_provider == "azure" ? module.azure_aks.0.host : module.gcp_gke.0.host
+  client_certificate     = var.cloud_provider == "azure" ? base64decode(module.azure_aks.0.client_certificate) : base64decode(module.gcp_gke.0.client_certificate)
+  client_key             = var.cloud_provider == "azure" ? base64decode(module.azure_aks.0.client_key) : base64decode(module.gcp_gke.0.client_key)
+  cluster_ca_certificate = var.cloud_provider == "azure" ? base64decode(module.azure_aks.0.cluster_ca_certificate) : base64decode(module.gcp_gke.0.cluster_ca_certificate)
+}
+
+provider "helm" {
+  kubernetes {
+    host                   = var.cloud_provider == "azure" ? module.azure_aks.0.host : module.gcp_gke.0.host
+    client_certificate     = var.cloud_provider == "azure" ? base64decode(module.azure_aks.0.client_certificate) : base64decode(module.gcp_gke.0.client_certificate)
+    client_key             = var.cloud_provider == "azure" ? base64decode(module.azure_aks.0.client_key) : base64decode(module.gcp_gke.0.client_key)
+    cluster_ca_certificate = var.cloud_provider == "azure" ? base64decode(module.azure_aks.0.cluster_ca_certificate) : base64decode(module.gcp_gke.0.cluster_ca_certificate)
+  }
 }
