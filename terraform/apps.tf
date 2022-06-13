@@ -37,7 +37,8 @@ module "petra" {
 module "klaus" {
   source = "./applications/klaus"
   depends_on = [
-    kubernetes_namespace.group
+    kubernetes_namespace.group,
+    module.nginx-controller
   ]
 
   namespace          = kubernetes_namespace.group.metadata.0.name
