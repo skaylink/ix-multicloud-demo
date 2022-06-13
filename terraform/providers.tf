@@ -37,26 +37,6 @@ provider "azurerm" {
   features {}
 }
 
-provider "kubernetes" {
-  host                   = module.azure_aks.0.host
-  client_certificate     = base64decode(module.azure_aks.0.client_certificate)
-  client_key             = base64decode(module.azure_aks.0.client_key)
-  cluster_ca_certificate = base64decode(module.azure_aks.0.cluster_ca_certificate)
-
-  alias = "azure"
-}
-
-provider "helm" {
-  kubernetes {
-    host                   = module.azure_aks.0.host
-    client_certificate     = base64decode(module.azure_aks.0.client_certificate)
-    client_key             = base64decode(module.azure_aks.0.client_key)
-    cluster_ca_certificate = base64decode(module.azure_aks.0.cluster_ca_certificate)
-  }
-
-  alias = "azure"
-}
-
 ### Google Cloud Platform
 
 provider "google" {
@@ -64,49 +44,19 @@ provider "google" {
   region  = var.gcp_region
 }
 
+### Kubernetes
 provider "kubernetes" {
-  host                   = module.gcp_gke.0.host
-  client_certificate     = base64decode(module.gcp_gke.0.client_certificate)
-  client_key             = base64decode(module.gcp_gke.0.client_key)
-  cluster_ca_certificate = base64decode(module.gcp_gke.0.cluster_ca_certificate)
-
-  alias = "gcp"
+  host                   = var.cloud_provider == "azure" ? module.azure_aks.0.host : module.gcp_gke.0.host
+  client_certificate     = var.cloud_provider == "azure" ? base64decode(module.azure_aks.0.client_certificate) : base64decode(module.gcp_gke.0.client_certificate)
+  client_key             = var.cloud_provider == "azure" ? base64decode(module.azure_aks.0.client_key) : base64decode(module.gcp_gke.0.client_key)
+  cluster_ca_certificate = var.cloud_provider == "azure" ? base64decode(module.azure_aks.0.cluster_ca_certificate) : base64decode(module.gcp_gke.0.cluster_ca_certificate)
 }
 
 provider "helm" {
   kubernetes {
-    host                   = module.gcp_gke.0.host
-    client_certificate     = base64decode(module.gcp_gke.0.client_certificate)
-    client_key             = base64decode(module.gcp_gke.0.client_key)
-    cluster_ca_certificate = base64decode(module.gcp_gke.0.cluster_ca_certificate)
+    host                   = var.cloud_provider == "azure" ? module.azure_aks.0.host : module.gcp_gke.0.host
+    client_certificate     = var.cloud_provider == "azure" ? base64decode(module.azure_aks.0.client_certificate) : base64decode(module.gcp_gke.0.client_certificate)
+    client_key             = var.cloud_provider == "azure" ? base64decode(module.azure_aks.0.client_key) : base64decode(module.gcp_gke.0.client_key)
+    cluster_ca_certificate = var.cloud_provider == "azure" ? base64decode(module.azure_aks.0.cluster_ca_certificate) : base64decode(module.gcp_gke.0.cluster_ca_certificate)
   }
-
-  alias = "gcp"
-}
-
-### Amazon Web Service
-
-provider "aws" {
-  region  = var.aws_region
-  profile = var.aws_profile
-}
-
-provider "kubernetes" {
-  host                   = module.aws_eks.0.host
-  client_certificate     = base64decode(module.aws_eks.0.client_certificate)
-  client_key             = base64decode(module.aws_eks.0.client_key)
-  cluster_ca_certificate = base64decode(module.aws_eks.0.cluster_ca_certificate)
-
-  alias = "aws"
-}
-
-provider "helm" {
-  kubernetes {
-    host                   = module.aws_eks.0.host
-    client_certificate     = base64decode(module.aws_eks.0.client_certificate)
-    client_key             = base64decode(module.aws_eks.0.client_key)
-    cluster_ca_certificate = base64decode(module.aws_eks.0.cluster_ca_certificate)
-  }
-
-  alias = "aws"
 }

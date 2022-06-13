@@ -1,11 +1,6 @@
 module "nginx_controller" {
   source = "terraform-iaac/nginx-controller/helm"
 
-  providers = {
-    kubernetes = var.cloud_provider
-    helm       = var.cloud_provider
-  }
-
   # This is required only for gcp
   ip_address = var.cloud_provider == "gcp" ? module.gcp_gke.0.ingress_address : ""
 }
@@ -13,10 +8,6 @@ module "nginx_controller" {
 # Application Components:
 
 resource "kubernetes_namespace" "group" {
-  providers = {
-    kubernetes = var.cloud_provider
-  }
-
   metadata {
     name = "group"
   }
@@ -27,9 +18,9 @@ module "petra" {
   depends_on = [
     kubernetes_namespace.group
   ]
+
   providers = {
-    kubernetes = var.cloud_provider
-    helm       = var.cloud_provider
+    helm = helm.azure
   }
 
   namespace = kubernetes_namespace.group.metadata.0.name
@@ -42,10 +33,6 @@ module "klaus" {
     kubernetes_namespace.group,
     module.nginx_controller
   ]
-  providers = {
-    kubernetes = var.cloud_provider
-    helm       = var.cloud_provider
-  }
 
   namespace          = kubernetes_namespace.group.metadata.0.name
   ingress_class_name = "nginx"

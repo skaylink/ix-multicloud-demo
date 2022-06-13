@@ -9,8 +9,8 @@ variable "cloud_provider" {
   type = string
 
   validation {
-    condition     = contains(["aws", "azure", "gcp"], var.cloud_provider)
-    error_message = "Allowed values for input_parameter are \"azure\", \"gcp\" or \"aws\"."
+    condition     = contains(["azure", "gcp"], var.cloud_provider) # TODO: Add AWS back
+    error_message = "Allowed values for input_parameter are \"azure\", \"gcp\" or \"aws\" (currently disabled)."
   }
 }
 
