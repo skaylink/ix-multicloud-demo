@@ -29,26 +29,7 @@ terraform {
   required_version = ">= 0.14.9"
 }
 
-provider "kubernetes" {
-  host                   = module.azure_aks.host
-  client_certificate     = base64decode(module.azure_aks.client_certificate)
-  client_key             = base64decode(module.azure_aks.client_key)
-  cluster_ca_certificate = base64decode(module.azure_aks.cluster_ca_certificate)
-}
-
-provider "helm" {
-  kubernetes {
-    host                   = module.azure_aks.host
-    client_certificate     = base64decode(module.azure_aks.client_certificate)
-    client_key             = base64decode(module.azure_aks.client_key)
-    cluster_ca_certificate = base64decode(module.azure_aks.cluster_ca_certificate)
-  }
-}
-
-provider "google" {
-  project = var.gcp_project_id
-  region  = var.gcp_region
-}
+### Azure Cloud
 
 provider "azurerm" {
   subscription_id = var.azure_subscription_id
@@ -56,7 +37,76 @@ provider "azurerm" {
   features {}
 }
 
+provider "kubernetes" {
+  host                   = module.azure_aks.0.host
+  client_certificate     = base64decode(module.azure_aks.0.client_certificate)
+  client_key             = base64decode(module.azure_aks.0.client_key)
+  cluster_ca_certificate = base64decode(module.azure_aks.0.cluster_ca_certificate)
+
+  alias = "azure"
+}
+
+provider "helm" {
+  kubernetes {
+    host                   = module.azure_aks.0.host
+    client_certificate     = base64decode(module.azure_aks.0.client_certificate)
+    client_key             = base64decode(module.azure_aks.0.client_key)
+    cluster_ca_certificate = base64decode(module.azure_aks.0.cluster_ca_certificate)
+  }
+
+  alias = "azure"
+}
+
+### Google Cloud Platform
+
+provider "google" {
+  project = var.gcp_project_id
+  region  = var.gcp_region
+}
+
+provider "kubernetes" {
+  host                   = module.gcp_gke.0.host
+  client_certificate     = base64decode(module.gcp_gke.0.client_certificate)
+  client_key             = base64decode(module.gcp_gke.0.client_key)
+  cluster_ca_certificate = base64decode(module.gcp_gke.0.cluster_ca_certificate)
+
+  alias = "gcp"
+}
+
+provider "helm" {
+  kubernetes {
+    host                   = module.gcp_gke.0.host
+    client_certificate     = base64decode(module.gcp_gke.0.client_certificate)
+    client_key             = base64decode(module.gcp_gke.0.client_key)
+    cluster_ca_certificate = base64decode(module.gcp_gke.0.cluster_ca_certificate)
+  }
+
+  alias = "gcp"
+}
+
+### Amazon Web Service
+
 provider "aws" {
   region  = var.aws_region
   profile = var.aws_profile
+}
+
+provider "kubernetes" {
+  host                   = module.aws_eks.0.host
+  client_certificate     = base64decode(module.aws_eks.0.client_certificate)
+  client_key             = base64decode(module.aws_eks.0.client_key)
+  cluster_ca_certificate = base64decode(module.aws_eks.0.cluster_ca_certificate)
+
+  alias = "aws"
+}
+
+provider "helm" {
+  kubernetes {
+    host                   = module.aws_eks.0.host
+    client_certificate     = base64decode(module.aws_eks.0.client_certificate)
+    client_key             = base64decode(module.aws_eks.0.client_key)
+    cluster_ca_certificate = base64decode(module.aws_eks.0.cluster_ca_certificate)
+  }
+
+  alias = "aws"
 }
