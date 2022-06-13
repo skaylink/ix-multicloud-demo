@@ -4,12 +4,12 @@
 
 global:
   # The address of the petra service
-  petraAddress: petra
+  petraAddress: http://petra
 
 replicaCount: 1
 
 image:
-  repository: skaylinkgmbh/ix-multicloud-demo-klaus
+  repository: docker.io/skaylinkgmbh/ix-multicloud-demo-klaus
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: latest
