@@ -14,7 +14,7 @@ func TestMixedUnit(t *testing.T) {
 		TerraformDir: "../terraform",
 		Vars: map[string]interface{}{
 			"klaus_provider": "azure",
-			"petra_provider": "aws",
+			"petra_provider": "gcp",
 		},
 	})
 	defer terraform.Destroy(t, terraformOptions)
@@ -38,10 +38,10 @@ func TestMixedUnit(t *testing.T) {
 		},
 	)
 
-	AWSIngressURL := terraform.Output(t, terraformOptions, "aws_ingress_url")
+	GCPIngressURL := terraform.Output(t, terraformOptions, "gcp_ingress_url")
 	http_helper.HttpGetWithRetryWithCustomValidation(
 		t,
-		AWSIngressURL,
+		GCPIngressURL,
 		&tlsConfig,
 		maxRetries,
 		timeBetweenRetries,
@@ -57,7 +57,7 @@ func TestMixedSystem(t *testing.T) {
 		TerraformDir: "../terraform",
 		Vars: map[string]interface{}{
 			"klaus_provider": "azure",
-			"petra_provider": "aws",
+			"petra_provider": "gcp",
 		},
 	})
 	defer terraform.Destroy(t, terraformOptions)

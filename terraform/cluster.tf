@@ -5,7 +5,6 @@ locals {
 
 # TODO: Fix this module
 # module "aws_eks" {
-#   count  = var.cloud_provider == "aws" ? 1 : 0
 #   source = "./cluster/aws"
 
 #   cluster_name    = local.cluster_name
@@ -13,7 +12,6 @@ locals {
 # }
 
 module "azure_aks" {
-  count  = var.cloud_provider == "azure" ? 1 : 0
   source = "./cluster/azure"
 
   cluster_name    = local.cluster_name
@@ -22,12 +20,11 @@ module "azure_aks" {
   azure_region = var.azure_region
 }
 
-module "gcp_gke" {
-  count  = var.cloud_provider == "gcp" ? 1 : 0
-  source = "./cluster/gcp"
-
-  cluster_name    = local.cluster_name
-  cluster_version = local.cluster_version
-
-  gcp_region = var.gcp_region
-}
+#module "gcp_gke" {
+#  source = "./cluster/gcp"
+#
+#  cluster_name    = local.cluster_name
+#  cluster_version = local.cluster_version
+#
+#  gcp_region = var.gcp_region
+#}

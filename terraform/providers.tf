@@ -1,4 +1,3 @@
-# Configure the Azure provider
 terraform {
   required_providers {
     azurerm = {
@@ -37,26 +36,44 @@ provider "azurerm" {
   features {}
 }
 
-### Google Cloud Platform
-
-provider "google" {
-  project = var.gcp_project_id
-  region  = var.gcp_region
-}
-
-### Kubernetes
 provider "kubernetes" {
-  host                   = var.cloud_provider == "azure" ? module.azure_aks.0.host : module.gcp_gke.0.host
-  client_certificate     = var.cloud_provider == "azure" ? base64decode(module.azure_aks.0.client_certificate) : base64decode(module.gcp_gke.0.client_certificate)
-  client_key             = var.cloud_provider == "azure" ? base64decode(module.azure_aks.0.client_key) : base64decode(module.gcp_gke.0.client_key)
-  cluster_ca_certificate = var.cloud_provider == "azure" ? base64decode(module.azure_aks.0.cluster_ca_certificate) : base64decode(module.gcp_gke.0.cluster_ca_certificate)
+  alias                  = "azure"
+  host                   = module.azure_aks.host
+  client_certificate     = base64decode(module.azure_aks.client_certificate)
+  client_key             = base64decode(module.azure_aks.client_key)
+  cluster_ca_certificate = base64decode(module.azure_aks.cluster_ca_certificate)
 }
 
 provider "helm" {
+  alias                    = "azure"
   kubernetes {
-    host                   = var.cloud_provider == "azure" ? module.azure_aks.0.host : module.gcp_gke.0.host
-    client_certificate     = var.cloud_provider == "azure" ? base64decode(module.azure_aks.0.client_certificate) : base64decode(module.gcp_gke.0.client_certificate)
-    client_key             = var.cloud_provider == "azure" ? base64decode(module.azure_aks.0.client_key) : base64decode(module.gcp_gke.0.client_key)
-    cluster_ca_certificate = var.cloud_provider == "azure" ? base64decode(module.azure_aks.0.cluster_ca_certificate) : base64decode(module.gcp_gke.0.cluster_ca_certificate)
+    host                   = module.azure_aks.host
+    client_certificate     = base64decode(module.azure_aks.client_certificate)
+    client_key             = base64decode(module.azure_aks.client_key)
+    cluster_ca_certificate = base64decode(module.azure_aks.cluster_ca_certificate)
   }
 }
+
+### Google Cloud Platform
+#provider "google" {
+#  project = var.gcp_project_id
+#  region  = var.gcp_region
+#}
+#
+#provider "kubernetes" {
+#  alias                  = "gcp"
+#  host                   =  module.gcp_gke.host
+#  client_certificate     =  base64decode(module.gcp_gke.client_certificate)
+#  client_key             =  base64decode(module.gcp_gke.client_key)
+#  cluster_ca_certificate =  base64decode(module.gcp_gke.cluster_ca_certificate)
+#}
+#
+#provider "helm" {
+#  alias                    = "gcp"
+#  kubernetes {
+#    host                   = module.gcp_gke.host
+#    client_certificate     = base64decode(module.gcp_gke.client_certificate)
+#    client_key             = base64decode(module.gcp_gke.client_key)
+#    cluster_ca_certificate = base64decode(module.gcp_gke.cluster_ca_certificate)
+#  }
+#}

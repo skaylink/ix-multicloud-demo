@@ -5,11 +5,20 @@ variable "name" {
   type = string
 }
 
-variable "cloud_provider" {
+variable "klaus_provider" {
   type = string
 
   validation {
-    condition     = contains(["azure", "gcp"], var.cloud_provider) # TODO: Add AWS back
+    condition     = contains(["azure", "gcp", "aws"], var.klaus_provider)
+    error_message = "Allowed values for input_parameter are \"azure\", \"gcp\" or \"aws\" (currently disabled)."
+  }
+}
+
+variable "petra_provider" {
+  type = string
+
+  validation {
+    condition     = contains(["azure", "gcp", "aws"], var.petra_provider)
     error_message = "Allowed values for input_parameter are \"azure\", \"gcp\" or \"aws\" (currently disabled)."
   }
 }
@@ -21,7 +30,6 @@ variable "ingress_domain" {
 ####################################################
 # Provider-specific variables
 ####################################################
-
 # Azure
 variable "azure_subscription_id" {
   type = string
