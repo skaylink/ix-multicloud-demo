@@ -55,25 +55,25 @@ provider "helm" {
 }
 
 ### Google Cloud Platform
-#provider "google" {
-#  project = var.gcp_project_id
-#  region  = var.gcp_region
-#}
-#
-#provider "kubernetes" {
-#  alias                  = "gcp"
-#  host                   =  module.gcp_gke.host
-#  client_certificate     =  base64decode(module.gcp_gke.client_certificate)
-#  client_key             =  base64decode(module.gcp_gke.client_key)
-#  cluster_ca_certificate =  base64decode(module.gcp_gke.cluster_ca_certificate)
-#}
-#
-#provider "helm" {
-#  alias                    = "gcp"
-#  kubernetes {
-#    host                   = module.gcp_gke.host
-#    client_certificate     = base64decode(module.gcp_gke.client_certificate)
-#    client_key             = base64decode(module.gcp_gke.client_key)
-#    cluster_ca_certificate = base64decode(module.gcp_gke.cluster_ca_certificate)
-#  }
-#}
+provider "google" {
+  project = var.gcp_project_id
+  region  = var.gcp_region
+}
+
+provider "kubernetes" {
+  alias                  = "gcp"
+  host                   =  module.gcp_gke.0.host
+  client_certificate     =  base64decode(module.gcp_gke.0.client_certificate)
+  client_key             =  base64decode(module.gcp_gke.0.client_key)
+  cluster_ca_certificate =  base64decode(module.gcp_gke.0.cluster_ca_certificate)
+}
+
+provider "helm" {
+  alias                    = "gcp"
+  kubernetes {
+    host                   = module.gcp_gke.0.host
+    client_certificate     = base64decode(module.gcp_gke.0.client_certificate)
+    client_key             = base64decode(module.gcp_gke.0.client_key)
+    cluster_ca_certificate = base64decode(module.gcp_gke.0.cluster_ca_certificate)
+  }
+}

@@ -1,5 +1,9 @@
 terraform.tfvars
 
+# Golang
+go.mod
+go.sum
+
 # Local .terraform directories
 **/.terraform/*
 

@@ -1,5 +1,5 @@
 locals {
-  cluster_name    = "${var.name}-cluster"
+  cluster_name    = "${var.name}cluster"
   cluster_version = "1.23"
 }
 
@@ -20,11 +20,12 @@ module "azure_aks" {
   azure_region = var.azure_region
 }
 
-#module "gcp_gke" {
-#  source = "./cluster/gcp"
-#
-#  cluster_name    = local.cluster_name
-#  cluster_version = local.cluster_version
-#
-#  gcp_region = var.gcp_region
-#}
+module "gcp_gke" {
+  count  = var.petra_provider == "azure" || var.klaus_provider == "azure" ? 1 : 0
+  source = "./cluster/gcp"
+
+  cluster_name    = local.cluster_name
+  cluster_version = local.cluster_version
+
+  gcp_region = var.gcp_region
+}
