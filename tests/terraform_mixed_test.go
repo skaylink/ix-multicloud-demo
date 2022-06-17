@@ -17,38 +17,38 @@ func TestMixedUnit(t *testing.T) {
 			"petra_provider": "gcp",
 		},
 	})
-	//defer terraform.Destroy(t, terraformOptions)
-	//terraform.InitAndApply(t, terraformOptions)
-	//
-	//// Network config
-	//tlsConfig := tls.Config{}
-	//maxRetries := 30
-	//timeBetweenRetries := 5 * time.Second
-    //    
-    //// Start test
-	//AzureIngressURL := terraform.Output(t, terraformOptions, "azure_ingress_url")
-	//http_helper.HttpGetWithRetryWithCustomValidation(
-	//	t,
-	//	AzureIngressURL,
-	//	&tlsConfig,
-	//	maxRetries,
-	//	timeBetweenRetries,
-	//	func(statusCode int, body string) bool {
-	//		return statusCode == 403
-	//	},
-	//)
-//
-	//GCPIngressURL := terraform.Output(t, terraformOptions, "gcp_ingress_url")
-	//http_helper.HttpGetWithRetryWithCustomValidation(
-	//	t,
-	//	GCPIngressURL,
-	//	&tlsConfig,
-	//	maxRetries,
-	//	timeBetweenRetries,
-	//	func(statusCode int, body string) bool {
-	//		return statusCode == 403
-	//	},
-	//)
+	defer terraform.Destroy(t, terraformOptions)
+	terraform.InitAndApply(t, terraformOptions)
+	
+	// Network config
+	tlsConfig := tls.Config{}
+	maxRetries := 30
+	timeBetweenRetries := 5 * time.Second
+        
+    // Start test
+	AzureIngressURL := terraform.Output(t, terraformOptions, "azure_ingress_url")
+	http_helper.HttpGetWithRetryWithCustomValidation(
+		t,
+		AzureIngressURL,
+		&tlsConfig,
+		maxRetries,
+		timeBetweenRetries,
+		func(statusCode int, body string) bool {
+			return statusCode == 403
+		},
+	)
+
+	GCPIngressURL := terraform.Output(t, terraformOptions, "gcp_ingress_url")
+	http_helper.HttpGetWithRetryWithCustomValidation(
+		t,
+		GCPIngressURL,
+		&tlsConfig,
+		maxRetries,
+		timeBetweenRetries,
+		func(statusCode int, body string) bool {
+			return statusCode == 403
+		},
+	)
 }
 
 func TestMixedSystem(t *testing.T) {
@@ -62,13 +62,19 @@ func TestMixedSystem(t *testing.T) {
 	})
 	defer terraform.Destroy(t, terraformOptions)
 	terraform.InitAndApply(t, terraformOptions)
-	
+
+	// Network config
+	tlsConfig := tls.Config{}
+	maxRetries := 30
+	timeBetweenRetries := 5 * time.Second
+
 	// Start test
 	KlausIngressURL := terraform.Output(t, terraformOptions, "klaus_url")
 	http_helper.HttpGetWithRetry(
 		t, 
 		KlausIngressURL, 
-		&tlsConfig, 200, 
+		&tlsConfig, 
+		200, 
 		"Hello world", 
 		maxRetries, 
 		timeBetweenRetries,

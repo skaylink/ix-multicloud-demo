@@ -21,7 +21,7 @@ module "azure_aks" {
 }
 
 module "gcp_gke" {
-  count  = var.petra_provider == "azure" || var.klaus_provider == "azure" ? 1 : 0
+  count  = var.petra_provider == "gcp" || var.klaus_provider == "gcp" ? 1 : 0
   source = "./cluster/gcp"
 
   cluster_name    = local.cluster_name

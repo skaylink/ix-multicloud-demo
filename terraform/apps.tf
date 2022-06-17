@@ -1,5 +1,4 @@
-
-
+### Azure cluster apps
 resource "kubernetes_namespace" "azure_group" {
   metadata {
     name = "group"
@@ -7,14 +6,6 @@ resource "kubernetes_namespace" "azure_group" {
   provider = kubernetes.azure
 }
 
-resource "kubernetes_namespace" "gcp_group" {
-  metadata {
-    name = "group"
-  }
-  provider = kubernetes.gcp
-}
-
-### Azure cluster apps
 module "azure_nginx_controller" {
   source = "terraform-iaac/nginx-controller/helm"
 
@@ -55,6 +46,13 @@ module "azure_klaus" {
 }
 
 ### GCP cluster apps
+resource "kubernetes_namespace" "gcp_group" {
+  metadata {
+    name = "group"
+  }
+  provider = kubernetes.gcp
+}
+
 module "gcp_nginx_controller" {
   source = "terraform-iaac/nginx-controller/helm"
   ip_address = module.gcp_gke.0.ingress_address
